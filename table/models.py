@@ -29,10 +29,10 @@ from django.db import models
         
 # Advertisement.init()
 
-
-
 class Advertisement(models.Model):
-    advertisor = models.TextField()  
+    exchange = models.TextField()
+    advertiser_no = models.TextField()
+    advertiser = models.TextField()  
     orders =  models.TextField()
     completion =  models.TextField()
     price =  models.TextField()
@@ -41,4 +41,5 @@ class Advertisement(models.Model):
     available = models.TextField()
     limit =  models.TextField()
 def __str__(self):
-    return '%s' % (self.advertisor)
+    return '%s' % (self.advertiser)
+

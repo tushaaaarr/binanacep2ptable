@@ -14,7 +14,9 @@ class AdvertisementDocument(Document):
     class Django:
         model = Advertisement
         fields = [
-            'advertisor',
+            'exchange',
+            'advertiser_no',
+            'advertiser',
             'orders',
             'completion',
             'price',
