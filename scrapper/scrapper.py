@@ -3,11 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from time import sleep
 from urllib.parse import urlparse, parse_qs
-from openpyxl import Workbook
 from elasticsearch import Elasticsearch
 ELASTIC_SEARCH_HOST = "http://localhost:9200"
 import os
-driverpath = os.path.abspath(os.getcwd())+"/chromedriver.exe"
+driverpath = "./chromedriver.exe" # winodws
+# driverpath = os.path.abspath(os.getcwd())+"/chromedriver.exe" # linux
 s=Service(executable_path= str(driverpath))
 
 es = Elasticsearch(ELASTIC_SEARCH_HOST)
@@ -22,10 +22,6 @@ class App:
         chrome_options.add_argument("--log-level=3")
         chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2,'profile.default_content_settings.images':2})
         self.driver = webdriver.Chrome(service = s,options=chrome_options)
-        # self.data = []
-        # self.wb = Workbook()
-        # self.sheet = self.wb.active
-        # self.es = Elasticsearch(ELASTIC_SEARCH_HOST)
 
     def scrap(self,link,index,pages)-> None:
         self.driver.get(link)
@@ -69,16 +65,6 @@ class App:
                     payment_methods.append(payment.get_attribute('innerHTML'))
                 doc = {"exchange": "Binance","advertiser":advertiser,"orders":orders,"completion":completion,"price":price,"fiat":fiat,"payment":payment_methods,"available":available,"limit":limit}
                 es.index(index=index,id=count,document=doc)
-                # print(doc)
-                # return None
-                # self.sheet.cell(row=count,column=1).value = adveriser
-                # self.sheet.cell(row=count,column=2).value = orders
-                # self.sheet.cell(row=count,column=3).value = completion
-                # self.sheet.cell(row=count,column=4).value = price
-                # self.sheet.cell(row=count,column=5).value = fiat
-                # self.sheet.cell(row=count,column=6).value = payment
-                # self.sheet.cell(row=count,column=7).value = available
-                # self.sheet.cell(row=count,column=8).value = limit
             page += 1
             buttons = self.driver.find_elements(By.TAG_NAME,"button")
             for b in buttons:
@@ -87,7 +73,6 @@ class App:
                     sleep(3)
                     break
     def close(self)-> None:
-        # self.wb.save(filename="out.xlsx")
         self.driver.close()
 a = App()
 a.scrap("https://p2p.binance.com/en/trade/buy/?fiat=NGN&payment=ALL","advertisements",3)

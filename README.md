@@ -1,4 +1,4 @@
-# binanacep2ptable
+# c25-market
 
 ### After Cloning project run the following commands (on project base directory) 
 #### Python manage.py make migrations
