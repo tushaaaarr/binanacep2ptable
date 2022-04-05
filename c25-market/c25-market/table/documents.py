@@ -35,11 +35,33 @@ class CommentDocument(Document):
         'number_of_shards': 1,
         'number_of_replicas': 0
         }
-        
+
     class Django:
         model = Comment
         fields = [
             'advertiser_no',
             'comment'
         ]
-            
+    
+
+
+
+# @registry.register_document
+# class SignUp(Document):
+#     class Index:
+#         name = 'register'
+#         settings = {
+#         'number_of_shards': 1,
+#         'number_of_replicas': 0
+#         }
+
+#     class Django:
+#         model = register
+#         fields = [
+#             'firstname',
+#             'lastname',
+#             'email',
+#             'status',
+#             'role',
+#         ]
+    

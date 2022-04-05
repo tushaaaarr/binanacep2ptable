@@ -78,7 +78,7 @@ ROOT_URLCONF = 'c25-market.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -152,3 +152,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # TEMP_VAR  = "adawsd"
 
+import os
+STATIC_URL = '/static/'
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+os.path.join(BASE_DIR, 'static')
+]
+STATIC_URL= "/static/"
+MEDIA_ROOT= os.path.join(BASE_DIR, "media")
+MEDIA_URL="/media/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+
+
+from dotenv import load_dotenv
+load_dotenv('.env')
+SMTP_HOST= str(os.getenv('SMTP_HOST'))
+SMTP_HOST_USER = str(os.getenv('SMTP_HOST_USER'))
+SMTP_HOST_PASS = str(os.getenv('SMTP_HOST_PASS'))
+SMTP_HOST_PORT = str(os.getenv('SMTP_HOST_PORT'))
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = SMTP_HOST
+EMAIL_HOST_PASSWORD = SMTP_HOST_PASS
+EMAIL_HOST_USER = SMTP_HOST_USER
+EMAIL_PORT = SMTP_HOST_PORT
+EMAIL_USE_TLS = True

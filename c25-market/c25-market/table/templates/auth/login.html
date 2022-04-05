@@ -1,0 +1,50 @@
+<div id="layoutAuthentication_content">
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="card-header">
+                            <h3 class="text-center font-weight-light my-4">Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="" method="POST">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="email" type="email" name="email" placeholder="name@example.com" oninput="emailChanged()"/>
+                                    <label for="inputEmail">Email address</label>
+                                </div> 
+                                <div class="form-floating mb-3" style="display:none;" id="password_holder">
+                                    <input class="form-control" id="email" type="password" name="password"/>
+                                    <label for="inputEmail">Password</label>
+                                </div>   
+                                <div class="row mt-4 mb-0">
+                                    <div class="input-group">
+                                        <input type="submit" class="btn btn-primary mx-auto" value="Get Magic Link" id="submit_btn"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer text-center py-3">
+                            <div class="small"><a href="register">Need an account? Register</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    var admin_emails = ["{{page_data.admin_email}}"]
+    function emailChanged(){
+        var email = $("#email").val()
+        if(admin_emails.includes(email)){
+            $("#password_holder").show()
+            $("#submit_btn").val("Login")
+        }else{
+            $("#password_holder").hide()
+            $("#submit_btn").val("Get Magic Link")
+        }
+    }
+    $(document).ready(emailChanged())
+</script>

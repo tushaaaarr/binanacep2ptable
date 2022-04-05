@@ -56,7 +56,6 @@
         <thead>
           <tr>
             <th>S.No</th>
-            <th style="display: none">Advertiser No</th>
             <th>Exchange</th>
             <th>Advertiser</th>
             <th>Orders</th>
@@ -97,11 +96,7 @@ fetch('get-advertisments-ajax', {
           dom: 'Bfrtip',
           data: dataSource,
           columns: [
-             {
-                 render: function (data, type, row, meta) {
-                     return meta.row + meta.settings._iDisplayStart + 1;
-                 }
-             },
+             {data: 'sr_no'},
              {data: 'exchange'},
              {data: 'advertiser' },
              {data: 'orders' },
@@ -131,10 +126,6 @@ fetch('get-advertisments-ajax', {
          "language": {
              "emptyTable": "No data available"
          },
-         "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-             $("td:first", nRow).html(iDisplayIndex + 1);
-             return nRow;
-                 },
         })
     }
   })
@@ -217,6 +208,7 @@ fetch('get-advertisments-ajax', {
         var rowIndex = dataTable.api().row($($inputCell).closest('tr')).index();    
         var fieldName = $($inputCell).attr('data-field');
         // console.log(rowIndex, fieldName, $inputCell, value);
+        // dataTable.cell({row:rowIndex, column:12}).data(value);
         // dataTable.rows().data()[rowIndex][fieldName] = value;    
     }    
   </script>

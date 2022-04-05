@@ -1,0 +1,30 @@
+<main class="my-auto">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-sm-10">
+        <div class="card shadow-lg bg-secondary border-0 rounded-lg">
+          {% if page_data.error == '' %}
+            <div class="alert-success">
+                <div class="modal-header justify-content-center">
+                <div class="icon-box">
+                    <i class="fa fa-check-circle fa-3x"></i>
+                </div>
+                </div>
+                <div class="modal-body text-center">
+                <h4>Success!</h4>
+                <p>Check Mail for Magic Link to Login! Expires in 10 Minute</p>
+                <p>{{page_data.error_mail}}</p>
+                </div>
+            </div>
+          {% else %}
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Login Error!</h4>
+                <p>{{page_data.error}}</p>
+                <p>{{page_data.error_mail}}</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
