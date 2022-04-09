@@ -9,9 +9,9 @@ c25-market/c25-market/.env
 
 run the following commands (on project base directory) 
 ```
-Python manage.py make 
+python manage.py makemigrations
 python manage.py migrate
-python manage.py search_index --rebulid
+python manage.py search_index --rebuild
 ```
 
 Run the following command to start Elasticsearch from the command line (on elasticsearch/bin 
