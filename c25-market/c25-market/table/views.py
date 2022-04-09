@@ -166,19 +166,62 @@ def register(request):
 
 def get_user(email):
     index = 'users'
-    # if es.indices.exists(index=index):
     res = es.search(index=index,query={'match':{'email': email}},size=1)
     if  res['hits']['total']['value'] == 0:
         return False
     return res['hits']['hits'][0]['_source']
     # return False
+def AdminPage(request):
+    index = 'users'
+    users_data = {}
+    user_list = list()
+    res = es.search(index=index,query={'match_all':{}},size=5000)
+    for hit in res['hits']['hits']:
+        src = hit["_source"]
+        src['id']= hit['_id']
+        user_list.append(src)
+    context = {'users_list':user_list}
+    return render(request,'admin_base/index.html',context)
 
+def GetAdminData(request):
+    if request.POST:
+        request.POST.get('status')
+        user_id = request.POST.get('user_id')
+        status = request.POST.get('status')
+        if status == 'True':
+            # update users-status 
+            es.update(index = 'users' ,id = user_id ,body={
+                            'doc':{'status': 1}
+            })
+        else:
+            # update users-status 
+            es.update(index = 'users' ,id = user_id ,body={
+                            'doc':{'status': 0}
+                        })
+    index = 'users'
+    users_data = {}
+    user_list = list()
+    res = es.search(index=index,query={'match_all':{}},size=5000)
+    for hit in res['hits']['hits']:
+        src = hit["_source"]
+        src['id']= hit['_id']
+        user_list.append(src)
+    user_data = ' '
+    
+    for i in user_list:
+        if i['status']==1:
+            temp = f"<tr><td class='user_email'>{i['email']}</td><td class='user_id'>{i['status']}</td><td><input class='checkuser' type='checkbox' value='' onchange='CheckBoxClicked({i['id']})'></td></tr>"
+        else:
+            temp = f"<tr><td class='user_email'>{i['email']}</td><td class='user_id'>{i['status']}</td><td><input class='checkuser' type='checkbox' value='' onchange='CheckBoxClicked({i['id']})'></td></tr>"
+        user_data = user_data + temp
+        temp = ' '
+            
+    return JsonResponse({'users_list':user_data})
 def verify_magic_link(request):
     page_data = {}
     page_data['title'] = "Magic Link"
     page_data['page_name'] = "auth/magic_link.html"
     page_data['error'] = "Magic Link Required"
-    
     magic_link = request.GET.get('magic_link')
 
     if magic_link:

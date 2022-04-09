@@ -22,8 +22,10 @@ urlpatterns = [
 
     # User/Staff router
     path('user',user.home, name='User Home'),
-
+    
     # Admin router
     path('administrator',administrator.home, name='Admin Home'),
+    path('administrator-handling',administrator.AdminPage,name='admin-page'),
+    path('get-admin-data',administrator.GetAdminData,name='GetAdminData'),
 
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
