@@ -14,7 +14,10 @@ def home(request):
         return redirect('/login')
     return render(request,'table/datatable3.html')
 
-def AdminPage(request):
+def users(request):
+    if checkLogin(request) == False:
+        return redirect('/login') 
+    
     index = 'users'
     users_data = {}
     user_list = list()
@@ -30,13 +33,17 @@ def AdminPage(request):
         src = hit["_source"]
         src['user_id']= hit['_id']
         user_list.append(src)
-    context = {'users':user_list}
-    return render(request,'admin_base/index.html',context)
+    page_data = {}
+    page_data['page_name'] = "administrator/users.html"
+    page_data['title'] = "Users"
+    page_data['users'] = user_list
+    return render(request,'administrator/index.html',{'page_data': page_data})
 
-def GetAdminData(request):
+def usersAjax(request):
     if request.POST:
         user_id = request.POST.get('user_id')
         status = request.POST.get('status')
+
         if status == '1':
             # update users-status 
             es.update(index = 'users' ,id = user_id ,body={

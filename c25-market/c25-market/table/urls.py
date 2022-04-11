@@ -25,7 +25,6 @@ urlpatterns = [
     
     # Admin router
     path('administrator',administrator.home, name='Admin Home'),
-    path('administrator-handling',administrator.AdminPage,name='admin-page'),
-    path('get-admin-data',administrator.GetAdminData,name='GetAdminData'),
-
+    path('administrator/users',administrator.users,name='administrator/users'),
+    path('administrator/users-ajax',administrator.usersAjax,name='usersAjax'),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

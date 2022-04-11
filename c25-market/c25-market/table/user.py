@@ -9,5 +9,5 @@ def checkLogin(request):
 def home(request):
     if checkLogin(request) == False:
         return redirect('/login')
-    return render(request,'table/datatable3.html')
+    return render(request,'user/advertisement.html')
 
